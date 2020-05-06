@@ -13,6 +13,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Landing Page Route
 Route::get('/', function () {
     return view('welcome');
 });
+
+// Auth Controller Route
+Auth::routes();
+
+// Resource Controller Routes
+Route::get('/home', 'HomeController@index')->name('home');
+Route::resource('categories', 'ArtCategoriesController');
+Route::resource('artists', 'ArtistsController');
+Route::resource('comp-details', 'CompDetailsController');
+Route::resource('contacts', 'ContactsController');
+Route::resource('gallery', 'GalleryController');
+Route::resource('news', 'NewsController');
