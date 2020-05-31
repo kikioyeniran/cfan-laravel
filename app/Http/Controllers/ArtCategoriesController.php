@@ -18,7 +18,8 @@ class ArtCategoriesController extends Controller
     }
     public function index()
     {
-        $categories = art_category::orderBy('created_at', 'desc')->get();
+        $new = new art_category();
+        $categories = $new->getCategories();
         return view('art_categories.index')->with('categories', $categories);
     }
 
@@ -29,7 +30,8 @@ class ArtCategoriesController extends Controller
      */
     public function create()
     {
-        $categories = art_category::orderBy('created_at', 'desc')->get();
+        $new = new art_category();
+        $categories = $new->getCategories();
         return view('art_categories.create')->with('categories', $categories);
     }
 
@@ -47,9 +49,9 @@ class ArtCategoriesController extends Controller
         $name = $request->input('name');
         $arr = explode(" ", $name);
         if (!empty($arr)) {
-            $link = join("-", $arr);
+            $link = strtolower(join("-", $arr));
         } else {
-            $link = $name;
+            $link = strtolower($name);
         }
 
         $category = new art_category;
@@ -79,7 +81,8 @@ class ArtCategoriesController extends Controller
      */
     public function edit($id)
     {
-        //
+        $category = art_category::find($id);
+        return view('art_categories.edit')->with('post', $category);
     }
 
     /**
@@ -91,7 +94,23 @@ class ArtCategoriesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required'
+        ]);
+        $name = $request->input('name');
+        $arr = explode(" ", $name);
+        if (!empty($arr)) {
+            $link = strtolower(join("-", $arr));
+        } else {
+            $link = strtolower($name);
+        }
+
+        $category = art_category::find($id);
+        $category->name = $name;
+        $category->link = $link;
+        $category->save();
+
+        return redirect('/categories')->with('success', 'Post edited');
     }
 
     /**
@@ -103,5 +122,30 @@ class ArtCategoriesController extends Controller
     public function destroy($id)
     {
         //
+    }
+    // Archive category
+    public function disable($id)
+    {
+        $category = art_category::find($id);
+        $category->disabled = 'true';
+        $category->save();
+        return redirect('/categories')->with('success', 'Post Disabled');
+    }
+
+    // Restore Disabled category
+    public function restore($id)
+    {
+        $category = art_category::find($id);
+        $category->disabled = 'false';
+        $category->save();
+        return redirect('/categories/disabled')->with('success', 'Post Restored');
+    }
+
+    // Display Disabled Categories
+    public function disabled()
+    {
+        $new = new art_category();
+        $d_categories = $new->getDisCategories();
+        return view('art_categories.disabled')->with('categories', $d_categories);
     }
 }

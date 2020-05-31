@@ -2,7 +2,7 @@
 <!-- ============================================================== -->
 <div class="dashboard-header">
     <nav class="navbar navbar-expand-lg bg-white fixed-top">
-        <a class="navbar-brand" href="#"><img class="logo-img" src="../images/ad_logo.png" alt="logo"></a>
+        <a class="navbar-brand" href="#"><img class="logo-img" src="{{ asset('images/ad_logo.png')}}" alt="logo"></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -69,6 +69,9 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="/categories/create">Add Category</a>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/categories/disabled">Disabled Categories</a>
+                                </li>
                             </ul>
                         </div>
                     </li>
@@ -77,11 +80,17 @@
                         <div id="submenu-3" class="collapse submenu" style="">
                             <ul class="nav flex-column">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="/artworks">View Artworks<span class="badge badge-secondary">View Retailers</span></a>
-                                </li>
-                                <li class="nav-item">
                                     <a class="nav-link" href="/artworks/create">Add Artwork</a>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/artworks/archived">Archived Artworks</a>
+                                </li>
+                                <br/>
+                                @foreach($cat_links as $cl)
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/artworks/admin/{{$cl->link}}">{{$cl->name}} <span class="badge badge-secondary">{{$cl->name}}</span></a>
+                                    </li>
+                                @endforeach
                             </ul>
                         </div>
                     </li>
@@ -90,10 +99,13 @@
                         <div id="submenu-4" class="collapse submenu" style="">
                             <ul class="nav flex-column">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="/news">View News <span class="badge badge-secondary">View News</span></a>
+                                    <a class="nav-link" href="/news/all">View News <span class="badge badge-secondary">View News</span></a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="/news/create">Add News</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/news/archived">Archived News</a>
                                 </li>
                             </ul>
                         </div>
@@ -103,10 +115,13 @@
                         <div id="submenu-5" class="collapse submenu" style="">
                             <ul class="nav flex-column">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="/artists">View Artists <span class="badge badge-secondary">View Artists</span></a>
+                                    <a class="nav-link" href="/artists/all">View Artists <span class="badge badge-secondary">View Artists</span></a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="/artists/create">Add Artist</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/artists/disabled">Disabled Artists Bio</a>
                                 </li>
                             </ul>
                         </div>
@@ -116,28 +131,47 @@
                         <div id="submenu-6" class="collapse submenu" style="">
                             <ul class="nav flex-column">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="/events">View Events <span class="badge badge-secondary">View news</span></a>
+                                    <a class="nav-link" href="/events/all">View Events <span class="badge badge-secondary">View news</span></a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="/events/create">Add Event</a>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/events/archived">Archived Events</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-8" aria-controls="submenu-4"><i class="fas fa-images"></i>Gallery for Events</a>
+                        <div id="submenu-8" class="collapse submenu" style="">
+                            <ul class="nav flex-column">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/gallery/create">Add Image to Gallery</a>
+                                </li>
+                                <br/>
+                                @foreach($events as $ev)
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/gallery/admin/{{$ev->link}}">{{$ev->theme}} Pictures<span class="badge badge-secondary">{{$ev->theme}}</span></a>
+                                    </li>
+                                @endforeach
                             </ul>
                         </div>
                     </li>
                      <li class="nav-item">
-                        <a class="nav-link" href="/ad-ret-inventory" aria-expanded="false"><i class="fas fa-fw fa-chart-pie"></i>Edit Company Details</a>
+                        <a class="nav-link" href="/comp-details/1/edit" aria-expanded="false"><i class="fas fa-fw fa-chart-pie"></i>Edit Company Details</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/ad-dist-inventory" aria-expanded="false"><i class="fas fa-fw fa-chart-pie"></i>Contacts</a>
+                        <a class="nav-link" href="/contacts/create" aria-expanded="false"><i class="fas fa-fw fa-chart-pie"></i>Contacts</a>
                     </li>
                     <li class="nav-item ">
-                        <a class="nav-link" href="/mailing-list" aria-expanded="false"><i class="fab fa-fw fa-wpforms"></i>Mailing List</a>
+                        {{-- <a class="nav-link" href="/mailing-list" aria-expanded="false"><i class="fab fa-fw fa-wpforms"></i>Mailing List</a> --}}
 
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/gallery/create" aria-expanded="false"><i class="fas fa-fw fa-table"></i>Gallery</a>
+                    {{-- <li class="nav-item">
+                        <a class="nav-link" href="/gallery/create" aria-expanded="false"><i class=" fas fa-images"></i>Gallery</a>
 
-                    </li>
+                    </li> --}}
                     {{--<li class="nav-item">
                         <a class="nav-link" href="/testimony/create" aria-expanded="false"><i class="fas fa-fw fa-table"></i>Testimonies</a>
 

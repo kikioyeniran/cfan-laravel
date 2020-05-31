@@ -37,7 +37,7 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Category Name</th>
-                                    <th>Delete</th>
+                                    <th>Disable</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -48,10 +48,7 @@
                                         <th scope="row">{{$count}}</th>
                                         <td><a href="/categories/{{$post->id}}/edit">{{$post->name}}</a></td>
                                         <td>
-                                            {!!Form::open(['action'=>['ArtCategoriesController@destroy', $post->id], 'method'=> 'POST'])!!}
-                                                {{Form::hidden('_method', 'DELETE')}}
-                                                {{Form::submit('Disable Category', ['class' => 'btn btn-danger', "onclick" => "return confirm('Are you sure you want to disable this category?');"])}}
-                                            {!!Form::close()!!}
+                                            <a href="/categories/disable/{{$post->id}}" class ='btn btn-danger' onclick="return confirm('Are you sure you want to disable this account?');">Disable</a>
                                         </td>
                                     </tr>
                                 @endforeach

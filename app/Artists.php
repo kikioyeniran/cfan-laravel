@@ -16,4 +16,16 @@ class Artists extends Model
     {
         return $this->belongsTo('App\User');
     }
+
+    public function getArtists()
+    {
+        $artists = $this::orderBy('created_at', 'desc')->where('disabled', 'false')->paginate(8);
+        return $artists;
+    }
+
+    public function getDisArtists()
+    {
+        $artists = $this::orderBy('created_at', 'desc')->where('disabled', 'true')->paginate(8);
+        return $artists;
+    }
 }

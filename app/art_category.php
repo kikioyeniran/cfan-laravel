@@ -16,4 +16,21 @@ class art_category extends Model
     {
         return $this->belongsTo('App\User');
     }
+
+    public function getCategories()
+    {
+        $categories = $this::orderBy('created_at', 'desc')->where('disabled', 'false')->get();
+        return $categories;
+    }
+    public function getDisCategories()
+    {
+        $categories = $this::orderBy('created_at', 'desc')->where('disabled', 'true')->get();
+        return $categories;
+    }
+    public function getLink($cid)
+    {
+        $category = $this::find($cid);
+        $link = $category->link;
+        return $link;
+    }
 }

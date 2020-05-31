@@ -16,4 +16,9 @@ class contacts extends Model
     {
         return $this->belongsTo('App\User');
     }
+    public function getContacts()
+    {
+        $contacts = $this::orderBy('created_at', 'desc')->get();
+        return $contacts;
+    }
 }

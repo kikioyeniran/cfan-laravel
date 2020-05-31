@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <title>CFAN Admin</title>
-    <link rel="shortcut icon" type="image/x-icon" href="../images/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('images/favicon.png')}}">
 
     {{-- <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script> --}}
@@ -34,6 +34,7 @@
     <link rel="stylesheet" href="{{ asset('admin/assets/vendor/fonts/flag-icon-css/flag-icon.min.css') }}">
     <link rel="stylesheet" href="{{ asset('admin/assets/vendor/datepicker/tempusdominus-bootstrap-4.css') }}" />
     <link rel="stylesheet" href="{{ asset('admin/assets/vendor/multi-select/css/multi-select.css') }}" />
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.16/dist/summernote-bs4.min.css" rel="stylesheet">
 </head>
 <body>
     <div class="dashboard-main-wrapper">
@@ -118,6 +119,15 @@
     <script src="{{ asset('admin/assets/libs/js/main-js.js')}}"></script>
     <!-- chart chartist js -->
     <script src="{{ asset('admin/assets/vendor/charts/chartist-bundle/chartist.min.js')}}"></script>
+    {{-- Summernot WYSIWYG --}}
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.16/dist/summernote-bs4.min.js"></script>
+    <script>
+      $('#summernote').summernote({
+        placeholder: 'Hello Bootstrap 4',
+        tabsize: 2,
+        height: 100
+      });
+    </script>
 
     {{-- Data Table Js --}}
     <script src="{{ asset('admin/assets/libs/js/jquery.dataTables.min.js')}}"></script>

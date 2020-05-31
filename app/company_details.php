@@ -16,4 +16,9 @@ class company_details extends Model
     {
         return $this->belongsTo('App\User');
     }
+    public function getCompDetails()
+    {
+        $compDetails = $this::orderBy('created_at', 'desc')->get();
+        return $compDetails;
+    }
 }

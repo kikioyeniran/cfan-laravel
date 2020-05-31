@@ -33,20 +33,19 @@
             <div class="card">
                 <h5 class="card-header">Add Category</h5>
                 <div class="card-body">
-                    {!! Form::open(['action' => 'Web\CategoryController@store', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+                    {!! Form::open(['action' => ['ArtCategoriesController@update', $post->id], 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
                         <div class="row">
-                            @foreach($categories as $post)
                             <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
                                 <div class="form-group">
                                     <label for="inputText3" class="col-form-label">Category Name</label>
                                     {{Form::text('name', $post->name, ['class' => 'form-control'])}}
                                 </div>
                             </div>
-                            @endforeach
                             <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
                                 <div class="form-group">
                                     <label for="inputText3" class="col-form-label">Click Submit To Add</label>
                                     <br>
+                                    {{Form::hidden('_method', 'PUT')}}
                                     {{Form::submit('Submit', ['class'=> 'btn btn-primary'])}}
                                 </div>
 
